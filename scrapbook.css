@@ -59,7 +59,8 @@ svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width:
 .bring-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px 14px; margin-top: 21px; }
 .bring-grid strong { font-size: 14px; display: block; font-weight: 600; }
 .bring-grid p { font-size: 11px; color: var(--color-muted); margin-top: 2px; }
-.mini-symbol { font-size: 26px; color: var(--color-link); line-height: 1; display: block; margin-bottom: 10px; }
+.mini-symbol { color: var(--color-link); line-height: 1; display: flex; align-items: center; margin-bottom: 10px; }
+.mini-symbol svg { width: 26px; height: 26px; }
 .work-section { margin-top: 80px; }
 .section-heading { display: flex; align-items: center; gap: 12px; }
 .section-heading h2 .handwritten { color: var(--color-accent); font-size: 1em; margin-left: 5px; }
