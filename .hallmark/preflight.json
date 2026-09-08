@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-08",
+  "framework": "React 19 with Vite 7; Vercel serverless content API",
+  "originalFonts": ["Syne", "DM Serif Display", "Space Mono"],
+  "originalPalette": "Dark slate CSS variables in style.css",
+  "motion": "Custom cursor, typewriter, intersection reveals; no animation library",
+  "preserved": ["Original assets", "Verified content and contact destinations", "Original style.css for reference"],
+  "introduced": ["Reference-inspired scrapbook styling", "Social media positioning", "Accessible project filters", "Native experience disclosures", "Password-protected hosted content admin"]
+}
