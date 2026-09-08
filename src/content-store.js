@@ -27,10 +27,10 @@ export const DEFAULT_DATA = {
     { id: "injective-api", category: "coding", type: "vibecoding", title: "injective developer api", description: "a unified api for orderbooks, market analytics, trade feeds, and wallet portfolios.", image: "endpoint.jpeg", imageAlt: "injective developer api project", link: "https://github.com/0xZorak/shadowAPI", cta: "view on github" }
   ],
   experience: [
-    { id: "developer", role: "developer", company: "independent projects", period: "ongoing", summary: "building and shipping web tools, apis, and data-led experiments across web3.", details: "rapid prototypes that turn ideas into working products.\napi and data experiments for onchain use cases.\nprojects include meme to nft and the injective developer api." },
     { id: "social-manager", role: "social media manager", company: "haikeystweet · suidom · taxcoin", period: "2024 – present", summary: "managing social presence, shaping brand narratives, and building engagement across web3 communities.", details: "social presence management for haikeystweet.\ncommunity growth and engagement strategy for suidom on sui.\nsocial strategy and community management for taxcoin.\nreply systems and content positioning for founders and kols." },
-    { id: "ghostwriter", role: "ghostwriter", company: "0xtulkas0 & 0xbreyn", period: "2025 – present", summary: "writing x threads and developing voice, positioning, and narrative strategies for web3 personal brands.", details: "researching topics, shaping ideas into threads, and tailoring each piece to the account’s voice and audience." },
-    { id: "analyst", role: "onchain analyst", company: "freelance", period: "2023 – present", summary: "using dune analytics to turn blockchain datasets into ecosystem insights across sei, solana, sui, and ton.", details: "protocol metrics, user behaviour, and liquidity research, including the shfl onchain report. the same research discipline informs my content work." }
+    { id: "analyst", role: "data & onchain analyst", company: "freelance", period: "2023 – present", summary: "using dune analytics to turn blockchain datasets into ecosystem insights across sei, solana, sui, and ton.", details: "protocol metrics, user behaviour, and liquidity research, including the shfl onchain report. the same research discipline informs my content work." },
+    { id: "ghostwriter", role: "writer", company: "0xtulkas0 & 0xbreyn", period: "2025 – present", summary: "writing x threads and developing voice, positioning, and narrative strategies for web3 personal brands.", details: "researching topics, shaping ideas into threads, and tailoring each piece to the account’s voice and audience." },
+    { id: "developer", role: "developer", company: "independent projects", period: "ongoing", summary: "building and shipping web tools, apis, and data-led experiments across web3.", details: "rapid prototypes that turn ideas into working products.\napi and data experiments for onchain use cases.\nprojects include meme to nft and the injective developer api." }
   ],
   projects: []
 };
@@ -47,6 +47,17 @@ function normalize(value = {}) {
   const experience = Array.isArray(value.experience) ? clone(value.experience) : clone(DEFAULT_DATA.experience);
   const developer = DEFAULT_DATA.experience.find((item) => item.id === "developer");
   if (!experience.some((item) => item.id === "developer")) experience.unshift(clone(developer));
+  const roleMigrations = { analyst: ["onchain analyst", "data & onchain analyst"], ghostwriter: ["ghostwriter", "writer"] };
+  experience.forEach((item) => {
+    const migration = roleMigrations[item.id];
+    if (migration?.includes(String(item.role).toLowerCase())) item.role = migration[1];
+  });
+  const experienceOrder = ["social-manager", "analyst", "ghostwriter", "developer"];
+  experience.sort((left, right) => {
+    const leftIndex = experienceOrder.indexOf(left.id);
+    const rightIndex = experienceOrder.indexOf(right.id);
+    return (leftIndex < 0 ? experienceOrder.length : leftIndex) - (rightIndex < 0 ? experienceOrder.length : rightIndex);
+  });
   return {
     about: {
       ...clone(DEFAULT_DATA.about),

@@ -3,8 +3,6 @@ import { getData, loadData } from "./content-store.js";
 import "../scrapbook.css";
 
 const filters = ["all", "social", "coding", "data", "writing"];
-const symbols = ["◎", "✎", "⌁", "◇"];
-
 function ArrowUpRight() {
   return <svg className="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>;
 }
@@ -44,9 +42,18 @@ function WorkCard({ item, index, linkHomeHashes = false }) {
   </article>;
 }
 
-function ExperienceItem({ item, index }) {
+function RoleIcon({ role = "" }) {
+  const name = role.toLowerCase();
+  if (name.includes("social")) return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4M7 9v6l10 4V5L7 9ZM9 15l1 5h3l-1-4" /><path d="M19 9c1 1 1 5 0 6" /></svg>;
+  if (name.includes("data") || name.includes("analyst")) return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16" /><path d="m7 15 4-4 3 2 5-6" /><circle cx="7" cy="15" r="1" /><circle cx="11" cy="11" r="1" /><circle cx="14" cy="13" r="1" /><circle cx="19" cy="7" r="1" /></svg>;
+  if (name.includes("writer") || name.includes("writing")) return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10L4 20Z" /><path d="m13.5 8 3 3M5.5 16l3 3" /></svg>;
+  if (name.includes("developer") || name.includes("engineer")) return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" /></svg>;
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" /></svg>;
+}
+
+function ExperienceItem({ item }) {
   const details = String(item.details || "").split("\n").filter(Boolean);
-  return <article className="timeline-item"><span className="timeline-icon" aria-hidden="true">{symbols[index % symbols.length]}</span><div><h3>{item.role}</h3><p className="company">{item.company} <span>{item.period}</span></p><p>{item.summary}</p>{details.length ? <details><summary>more about the work</summary>{details.length > 1 ? <ul>{details.map((line) => <li key={line}>{line}</li>)}</ul> : <p>{details[0]}</p>}</details> : null}</div></article>;
+  return <article className="timeline-item"><span className="timeline-icon"><RoleIcon role={item.role} /></span><div><h3>{item.role}</h3><p className="company">{item.company} <span>{item.period}</span></p><p>{item.summary}</p>{details.length ? <details><summary>more about the work</summary>{details.length > 1 ? <ul>{details.map((line) => <li key={line}>{line}</li>)}</ul> : <p>{details[0]}</p>}</details> : null}</div></article>;
 }
 
 function usePortfolioData() {
@@ -93,7 +100,7 @@ export default function App() {
         <div className="bring paper taped"><p className="bring-heading">what i do <span className="handwritten">three lanes, plenty of crossovers</span></p><div className="bring-grid"><div><span className="mini-symbol" aria-hidden="true">⌘</span><strong>vibecoding</strong><p>ideas into working prototypes</p></div><div><span className="mini-symbol" aria-hidden="true">⌁</span><strong>data analysis</strong><p>the story under the chart</p></div><div><span className="mini-symbol" aria-hidden="true">✎</span><strong>social media</strong><p>voice, content, and community</p></div><div><span className="mini-symbol" aria-hidden="true">◎</span><strong>web3 research</strong><p>context before conclusions</p></div></div></div>
       </div></section>
       <section id="work" className="work-section"><div className="section-heading"><h2>selected work <span className="handwritten">from the browser tabs</span></h2><span className="round-stamp" aria-hidden="true">✎</span></div><p className="section-lede">things i’ve written, measured, and put into the world.</p><div className="filters" role="group" aria-label="filter selected work">{filters.map((name) => <button key={name} type="button" aria-pressed={filter === name} onClick={() => setFilter(name)}>{name === "coding" ? "vibecoding" : name === "all" ? "everything" : name}</button>)}</div><p className="sr-only" role="status">{visibleWork.length} of {filteredWork.length} work samples shown.</p><div className="work-grid" aria-live="polite">{visibleWork.map((item, index) => <WorkCard key={item.id} item={item} index={index} />)}</div>{data.work.length > 6 ? <div className="work-reveal"><a className="reveal-button" href="work.html">see more <ArrowUpRight /></a></div> : null}</section>
-      <section id="experience" className="experience paper taped"><div className="section-heading"><h2>experience <span className="handwritten">& the road so far</span></h2></div><div className="timeline">{data.experience.map((item, index) => <ExperienceItem key={item.id} item={item} index={index} />)}</div><div className="experience-bottom"><div><h3>education</h3><p><strong>b.tech in information systems</strong></p><p>federal university of technology, akure<br />2023 – 2026</p></div><div><h3>a little recognition</h3><p><strong>rova writing contest</strong></p><p>multiple-time winner</p><p className="handwritten award-note">a good story travels.</p></div></div></section>
+      <section id="experience" className="experience paper taped"><div className="section-heading"><h2>experience <span className="handwritten">& the road so far</span></h2></div><div className="timeline">{data.experience.map((item) => <ExperienceItem key={item.id} item={item} />)}</div><div className="experience-bottom"><div><h3>education</h3><p><strong>b.tech in information systems</strong></p><p>federal university of technology, akure<br />2023 – 2026</p></div><div><h3>a little recognition</h3><p><strong>rova writing contest</strong></p><p>multiple-time winner</p><p className="handwritten award-note">a good story travels.</p></div></div></section>
       <section id="toolkit" className="toolkit"><div className="section-heading"><h2>behind the work <span className="handwritten">what ends up open on my laptop</span></h2></div><div className="toolkit-layout"><div className="toolkit-note"><p className="handwritten">make the thing.<br />check the numbers.<br />find the sentence.<br />repeat.</p></div><div className="toolkit-list"><div><h3>build</h3><p>rapid prototyping · application development · api experiments · sei network</p></div><div><h3>analyse</h3><p>dune analytics · sql · excel · tableau · power bi · ecosystem mapping</p></div><div><h3>communicate</h3><p>social strategy · thread writing · ghostwriting · brand positioning · community engagement</p></div><div><h3>keep learning</h3><p>statistics · data science · product thinking · onchain research</p></div></div></div></section>
       <footer id="connect" className="connect"><p className="handwritten">got a messy idea, a quiet brand, or a stubborn dataset?</p><h2>let’s make it useful.</h2><p>social media, data work, or a prototype that needs to exist.<br />tell me what you’re working on.</p><div className="contact-actions"><a className="contact-button" href="https://t.me/faroukobayanju" target="_blank" rel="noopener noreferrer">message on telegram <ArrowUpRight /></a><a className="email-link" href="mailto:obayanjuadeshina571@gmail.com">send an email <ArrowUpRight /></a></div></footer>
     </main>
