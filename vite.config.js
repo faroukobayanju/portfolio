@@ -9,6 +9,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         portfolio: resolve(import.meta.dirname, "index.html"),
+        work: resolve(import.meta.dirname, "work.html"),
         admin: resolve(import.meta.dirname, "admin.html")
       }
     }

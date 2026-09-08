@@ -90,6 +90,19 @@ svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width:
 .reveal-button:hover { background: var(--color-paper); border-color: var(--color-paper); color: var(--color-ink); }
 .reveal-button:active { transform: translateY(1px); }
 .reveal-button:disabled { background: var(--color-board-light); color: var(--color-light-muted); }
+.archive-board { padding-top: 136px; }
+.archive-intro { position: relative; max-width: 75ch; padding: 32px 36px 56px; background: var(--color-note); color: var(--color-ink); box-shadow: 6px 8px 0 var(--color-shadow); transform: rotate(-.5deg); }
+.archive-intro::before { content: ""; position: absolute; top: -12px; right: 32px; width: 72px; height: 24px; background: var(--color-tape); transform: rotate(7deg); }
+.archive-intro .handwritten { margin-top: 28px; color: var(--color-link); font-size: 22px; }
+.archive-intro h1 { margin-top: 2px; }
+.archive-intro > p:last-child { max-width: 60ch; margin-top: 16px; color: var(--color-muted); }
+.archive-back { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; border-bottom: 1px solid var(--color-rule); white-space: nowrap; }
+.archive-back:hover { color: var(--color-link); text-decoration: none; }
+.archive-work { margin-top: 72px; }
+.archive-footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 72px 0 32px; }
+.archive-footer a { display: inline-flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--color-light-muted); font-size: 13px; font-weight: 700; white-space: nowrap; }
+.archive-footer a:hover { color: var(--color-accent); text-decoration: none; }
+.archive-footer a:active { transform: translateY(1px); }
 .metric-pair { display: flex; gap: 26px; margin-top: 15px; }
 .metric-pair strong { font-size: 25px; letter-spacing: -.03em; line-height: 1.2; }
 .metric-pair span { display: block; font-size: 10px; color: var(--color-muted); }
@@ -200,6 +213,10 @@ details ul { padding-left: 18px; }
   .timeline-item h3 { font-size: 17px; }
   .company { overflow-wrap: anywhere; }
   .connect { padding-top: 65px; }
+  .archive-board { padding-top: 104px; }
+  .archive-intro { padding: 24px 20px 40px; }
+  .archive-intro .handwritten { margin-top: 22px; }
+  .archive-footer { align-items: flex-start; flex-direction: column; padding-top: 56px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
