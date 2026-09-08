@@ -34,9 +34,8 @@ The deployable multipage build is written to `dist/`.
 The admin edits:
 
 - about copy and portrait
-- selected work
+- selected work, including vibecoding projects
 - experience
-- off-the-clock projects
 
 Production content is stored in Vercel Blob through `/api/content`. Public reads require no credentials; every write from the admin requires the private `ADMIN_PASSWORD` environment variable. The password is kept in `sessionStorage` after entry, so closing the browser tab signs the editor out.
 

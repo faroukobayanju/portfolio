@@ -22,7 +22,7 @@ function artMarkup(item) {
   return `<div class="card-art card-art--${escapeHtml(item.art || 'warm')}" aria-hidden="true">
     <span class="small-note">${escapeHtml(item.type || 'selected work')}</span>
     <span class="art-title">${copy}</span>
-    <span class="art-scribble handwritten">made by farouk ↗</span>
+    <span class="art-scribble handwritten">made by farouk</span>
   </div>`;
 }
 
@@ -46,7 +46,7 @@ function renderWorkItem(item, index) {
       ${metrics}
       ${item.tags ? `<p class="work-tags">${escapeHtml(item.tags)}</p>` : ''}
       ${item.note ? `<p class="source-note">${escapeHtml(item.note)}</p>` : ''}
-      ${item.link ? `<a class="text-link" href="${href}"${linkAttributes(item.link)}>${escapeHtml(item.cta || 'view work')} <span aria-hidden="true">↗</span></a>` : ''}
+      ${item.link ? `<a class="text-link" href="${href}"${linkAttributes(item.link)}>${escapeHtml(item.cta || 'view work')}</a>` : ''}
     </div>
   </article>`;
 }
@@ -56,7 +56,7 @@ function renderExperienceItem(item, index) {
   const details = detailLines.length > 1
     ? `<ul>${detailLines.map(line => `<li>${escapeHtml(line)}</li>`).join('')}</ul>`
     : `<p>${escapeHtml(detailLines[0] || '')}</p>`;
-  const symbols = ['◎', '✎', '⌁', '↗'];
+  const symbols = ['◎', '✎', '⌁', '◇'];
   return `<article class="timeline-item">
     <span class="timeline-icon" aria-hidden="true">${symbols[index % symbols.length]}</span>
     <div>
@@ -75,7 +75,7 @@ function renderProjectItem(item) {
     <div>
       <h3>${escapeHtml(item.title)}</h3>
       <p>${escapeHtml(item.description)}</p>
-      ${item.link ? `<a class="text-link" href="${href}"${linkAttributes(item.link)}>${escapeHtml(item.cta || 'view project')} ↗</a>` : ''}
+      ${item.link ? `<a class="text-link" href="${href}"${linkAttributes(item.link)}>${escapeHtml(item.cta || 'view project')}</a>` : ''}
     </div>
   </article>`;
 }

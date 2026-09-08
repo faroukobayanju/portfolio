@@ -20,7 +20,8 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .admin-header .handwritten { color: var(--color-accent); font-size: 22px; margin: 0; }
 .admin-header h1 { margin: 0; font-size: clamp(2.4rem, 7vw, 5.5rem); line-height: .95; letter-spacing: -.07em; overflow-wrap: anywhere; }
 .admin-header p:last-child { color: var(--color-light-muted); max-width: 65ch; }
-.preview-link { white-space: nowrap; background: var(--color-accent); color: var(--color-accent-ink); padding: 12px 20px; border-radius: 99px; font-weight: 700; }
+.preview-link { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--color-accent); color: var(--color-accent-ink); padding: 12px 20px; border-radius: 99px; font-weight: 700; }
+.inline-icon { width: 1.05em; height: 1.05em; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .preview-link:hover { background: var(--color-note); text-decoration: none; }
 .storage-note { display: flex; gap: var(--space-sm); padding: var(--space-md) var(--space-lg); background: var(--color-note); color: var(--color-ink); border-radius: 8px; font-size: 13px; }
 .storage-note span { color: var(--color-muted); }

@@ -22,32 +22,40 @@ export const DEFAULT_DATA = {
     { id: "shfl-report", category: "data", type: "onchain intelligence", title: "shfl onchain report", description: "a deep dive into protocol metrics, user behaviour, and liquidity — turning blockchain data into a story stakeholders can use.", image: "onchain.png", imageAlt: "shfl onchain report research visual", tags: "dune analytics · research · storytelling", link: "onchain.png", cta: "view report preview" },
     { id: "brand-social", category: "social", type: "brand & community", title: "showing up with intention", description: "social presence for haikeystweet, community growth and engagement for suidom, and social strategy for taxcoin.", art: "brand", artCopy: "haikeystweet\nsuidom\ntaxcoin", link: "#experience", cta: "explore my experience" },
     { id: "defi-agents", category: "writing", type: "research-led writing", title: "why agents matter in defi", description: "exploring the gap between open financial systems and the experience of actually using them.", art: "ink", artCopy: "big ideas.\nclear words.", link: "https://x.com/faroukobayanju/status/1984878224233336985", cta: "read the thread" },
-    { id: "ghostwriting", category: "writing", type: "founder & kol ghostwriting", title: "a voice worth following", description: "threads, positioning, and narratives for 0xtulkas0 and 0xbreyn — built around the person behind the account.", art: "lined", artCopy: "your ideas.\nyour voice.\nmy words.", link: "https://t.me/faroukobayanju", cta: "talk about ghostwriting" }
+    { id: "ghostwriting", category: "writing", type: "founder & kol ghostwriting", title: "a voice worth following", description: "threads, positioning, and narratives for 0xtulkas0 and 0xbreyn — built around the person behind the account.", art: "lined", artCopy: "your ideas.\nyour voice.\nmy words.", link: "https://t.me/faroukobayanju", cta: "talk about ghostwriting" },
+    { id: "meme-nft", category: "coding", type: "vibecoding", title: "meme to nft", description: "a sei network experiment turning memes into nfts. internet culture, made onchain.", image: "justmemeit.jpeg", imageAlt: "meme to nft application on sei", link: "justmemeit.jpeg", cta: "view project preview" },
+    { id: "injective-api", category: "coding", type: "vibecoding", title: "injective developer api", description: "a unified api for orderbooks, market analytics, trade feeds, and wallet portfolios.", image: "endpoint.jpeg", imageAlt: "injective developer api project", link: "https://github.com/0xZorak/shadowAPI", cta: "view on github" }
   ],
   experience: [
+    { id: "developer", role: "developer", company: "independent projects", period: "ongoing", summary: "building and shipping web tools, apis, and data-led experiments across web3.", details: "rapid prototypes that turn ideas into working products.\napi and data experiments for onchain use cases.\nprojects include meme to nft and the injective developer api." },
     { id: "social-manager", role: "social media manager", company: "haikeystweet · suidom · taxcoin", period: "2024 – present", summary: "managing social presence, shaping brand narratives, and building engagement across web3 communities.", details: "social presence management for haikeystweet.\ncommunity growth and engagement strategy for suidom on sui.\nsocial strategy and community management for taxcoin.\nreply systems and content positioning for founders and kols." },
     { id: "ghostwriter", role: "ghostwriter", company: "0xtulkas0 & 0xbreyn", period: "2025 – present", summary: "writing x threads and developing voice, positioning, and narrative strategies for web3 personal brands.", details: "researching topics, shaping ideas into threads, and tailoring each piece to the account’s voice and audience." },
     { id: "analyst", role: "onchain analyst", company: "freelance", period: "2023 – present", summary: "using dune analytics to turn blockchain datasets into ecosystem insights across sei, solana, sui, and ton.", details: "protocol metrics, user behaviour, and liquidity research, including the shfl onchain report. the same research discipline informs my content work." }
   ],
-  projects: [
-    { id: "meme-nft", title: "meme to nft", description: "a sei network experiment turning memes into nfts. internet culture, made onchain.", image: "justmemeit.jpeg", imageAlt: "meme to nft application on sei", link: "justmemeit.jpeg", cta: "view project preview" },
-    { id: "injective-api", title: "injective developer api", description: "a unified api for orderbooks, market analytics, trade feeds, and wallet portfolios.", image: "endpoint.jpeg", imageAlt: "injective developer api project", link: "https://github.com/0xZorak/shadowAPI", cta: "view on github" }
-  ]
+  projects: []
 };
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
 function normalize(value = {}) {
   const about = value.about && typeof value.about === "object" ? value.about : {};
+  const work = Array.isArray(value.work) ? clone(value.work) : clone(DEFAULT_DATA.work);
+  const legacyProjects = Array.isArray(value.projects) ? value.projects : [];
+  legacyProjects.forEach((item) => {
+    if (!work.some((entry) => entry.id === item.id)) work.push({ ...clone(item), category: "coding", type: "vibecoding" });
+  });
+  const experience = Array.isArray(value.experience) ? clone(value.experience) : clone(DEFAULT_DATA.experience);
+  const developer = DEFAULT_DATA.experience.find((item) => item.id === "developer");
+  if (!experience.some((item) => item.id === "developer")) experience.unshift(clone(developer));
   return {
     about: {
       ...clone(DEFAULT_DATA.about),
       ...about,
       bullets: Array.isArray(about.bullets) ? about.bullets.filter(Boolean) : clone(DEFAULT_DATA.about.bullets)
     },
-    work: Array.isArray(value.work) ? value.work : clone(DEFAULT_DATA.work),
-    experience: Array.isArray(value.experience) ? value.experience : clone(DEFAULT_DATA.experience),
-    projects: Array.isArray(value.projects) ? value.projects : clone(DEFAULT_DATA.projects)
+    work,
+    experience,
+    projects: []
   };
 }
 
